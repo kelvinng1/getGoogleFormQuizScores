@@ -1,12 +1,14 @@
-# getGoogleFormQuizScores
+# Get Quiz Scores from Google Form
 
 Purpose of this Google Script is to extract the Scores of each question per each response from Google Form / Quiz.
 This function is **NOT available** in Google Form nor in any add-on. As of 2020-10-16, Google Form can only provide the total score per response in Google Sheets.
 
 **Installation**
+
 To use the script, you need to copy this script into the *Script Editor* of the Form. 
 
 **Usage**
+
 Simply execute the script **function getGoogleFormQuizScores()** inside the *Script Editor* and it will create a file named *<your form name> Scores.csv* file. This file is in CSV (Comma Separated Values) format.
 
 Inside this CSV file, it will list out either the answer or the score of the question and separte them by a comma. Each response will be separated by a newline.
