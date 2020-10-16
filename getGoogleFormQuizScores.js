@@ -63,6 +63,16 @@ function getGoogleFormQuizScores() {
 
   // csv file formatted output
   var csv = "";
+
+  // Get the current googleForm name and Setup CSV file with the same name prefix for output
+  const currentForm = FormApp.getActiveForm();
+  const formFile = DriveApp.getFileById(currentForm.getId());
+  const formName = formFile.getName();
+  const formFolder = formFile.getParents().next();
+  var csvFilename = formName.concat(" Scores.csv");
+  var csvFile = null;
+  //[debug] Logger.log("Path : ", formFolder.getName());
+  //[debug] Logger.log("CSV Filename : ", csvFilename);
     
   for (var j=0; j<responses.length; j++) {
   //[debug] for (var j=0; j<10; j++) {
@@ -100,6 +110,7 @@ function getGoogleFormQuizScores() {
                   
         if (maxScore == "0") {
           lineItem = answer;
+          lineItem = lineItem.replace(/\u002c/g, "-");
         } else {
           lineItem = score;
         }
@@ -111,5 +122,6 @@ function getGoogleFormQuizScores() {
       //[debug] Logger.log("===================")
       csv = csv.concat("\r\n");
     }
-    Logger.log(csv);
+    //[debug] Logger.log(csv);
+    csvFile = formFolder.createFile(csvFilename, csv);
   }
