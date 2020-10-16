@@ -75,14 +75,15 @@ function getGoogleFormQuizScores() {
   //[debug] Logger.log("CSV Filename : ", csvFilename);
     
   for (var j=0; j<responses.length; j++) {
-  //[debug] for (var j=0; j<10; j++) {
+  //[debug] for (var j=0; j<5; j++) {
   
     var response = responses[j];
+    var totalScore = 0; // Total score per each response
   
     for (var i=0; i<items.length; i++) {
   
       var question = items[i];
-  
+        
       // Get the item's title text
       //[debug]  var qTitle = question.getTitle();
       
@@ -97,8 +98,7 @@ function getGoogleFormQuizScores() {
          
       var item = castQuizItem_(question, qType);
   
-      // Quiz Score and Maximum Points are not available
-      // for Checkbox Grid and Multiple Choice Grid questions
+      // Quiz Score and Maximum Points are not available for Checkbox Grid and Multiple Choice Grid questions
       // through they are gradable in the Google Form
   
       if (item && typeof item.getPoints === "function") {
@@ -116,11 +116,12 @@ function getGoogleFormQuizScores() {
         }
         //[debug] Logger.log(qTitle.substring(0,4), maxScore, lineItem);
         csv = csv.concat(lineItem);
+        totalScore += score;
         }
         csv = csv.concat(", ");
       }
       //[debug] Logger.log("===================")
-      csv = csv.concat("\r\n");
+      csv = csv.concat(totalScore, "\r\n");
     }
     //[debug] Logger.log(csv);
     csvFile = formFolder.createFile(csvFilename, csv);
