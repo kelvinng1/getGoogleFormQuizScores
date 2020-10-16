@@ -5,13 +5,15 @@ This function is **NOT available** in Google Form nor in any add-on. As of 2020-
 
 **Installation**
 
-To use the script, you need to copy this script into the *Script Editor* of the Form. 
+To use the script, you need to copy this script into the *Script Editor* of the Form.
+The first time you install the script in the form you will need to give permissions to run the script. Permissions included reading data from your form, writing file to your Google Drive, etc.
 
 **Usage**
 
 Simply execute the script **function getGoogleFormQuizScores()** inside the *Script Editor* and it will create a file named *<your form name> Scores.csv* file. This file is in CSV (Comma Separated Values) format.
 
-Inside this CSV file, it will list out either the answer or the score of the question and separte them by a comma. Each response will be separated by a newline.
+Inside this CSV file, it will list out either the answer or the score of the question and separte them by a comma. Each response will be separated by a newline. All the commas *","* inside an answers will be converted to a dash *"-"*.
+
 
 If the answer of the question do not count as a score (Max Score = 0), the script will return the answer insead of the score of the question. This can be used for questions like : your name, your email address ... etc.
 
