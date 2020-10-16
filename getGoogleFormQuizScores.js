@@ -50,59 +50,66 @@ function castQuizItem_(item, itemType) {
   return null;
 }
 
-  function getGoogleFormQuizScores() {
+function getGoogleFormQuizScores() {
   
-    // Returns the form to which the script is container-bound.
-    var form = FormApp.getActiveForm();
+  // Returns the form to which the script is container-bound.
+  var form = FormApp.getActiveForm();
   
-    // Get the most recently submitted form response
-    var responses = form.getResponses();
+  // Get the most recently submitted form response
+  var responses = form.getResponses();
   
-    // Gets an array of all items in the form.
-    var items = form.getItems();
+  // Gets an array of all items in the form.
+  var items = form.getItems();
+
+  // csv file formatted output
+  var csv = "";
     
-    for (var j=0; j<responses.length; j++) {
-    //for (var j=0; j<10; j++) {
-      var response = responses[j];
+  for (var j=0; j<responses.length; j++) {
+  //[debug] for (var j=0; j<10; j++) {
   
-      for (var i=0; i<items.length; i++) {
+    var response = responses[j];
   
-        var question = items[i];
+    for (var i=0; i<items.length; i++) {
   
-        // Get the item's title text
-        var qTitle = question.getTitle();
+      var question = items[i];
+  
+      // Get the item's title text
+      //[debug]  var qTitle = question.getTitle();
       
-        // Get the item's type like Checkbox, Multiple Choice, Grid, etc.
-        var qType = question.getType();
+      // Get the item's type like Checkbox, Multiple Choice, Grid, etc.
+      var qType = question.getType();
   
-        // Gets the item response contained in this form response for a given item.
-        var responseForItem = response.getResponseForItem(question)
+      // Gets the item response contained in this form response for a given item.
+      var responseForItem = response.getResponseForItem(question)
   
-        //Gets the answer that the respondent submitted.
-        var answer = responseForItem ? responseForItem.getResponse() : null;
+      //Gets the answer that the respondent submitted.
+      var answer = responseForItem ? responseForItem.getResponse() : null;
          
-        var item = castQuizItem_(question, qType);
+      var item = castQuizItem_(question, qType);
   
-        // Quiz Score and Maximum Points are not available
-        // for Checkbox Grid and Multiple Choice Grid questions
-        // through they are gradable in the Google Form
+      // Quiz Score and Maximum Points are not available
+      // for Checkbox Grid and Multiple Choice Grid questions
+      // through they are gradable in the Google Form
   
-        if (item && typeof item.getPoints === "function") {
+      if (item && typeof item.getPoints === "function") {
   
-          var maxScore = item.getPoints();
-          var gradableResponseForItem = response.getGradableResponseForItem(question);
-          var score = gradableResponseForItem.getScore();
-          var lineItem = " ";
-          
-          if (maxScore == "0") {
-            lineItem = answer;
-          } else {
-            lineItem = score;
-          }
-          Logger.log(qTitle.substring(0,4), maxScore, lineItem);
-  
+        var maxScore = item.getPoints();
+        var gradableResponseForItem = response.getGradableResponseForItem(question);
+        var score = gradableResponseForItem.getScore();
+        var lineItem = " ";
+                  
+        if (maxScore == "0") {
+          lineItem = answer;
+        } else {
+          lineItem = score;
         }
+        //[debug] Logger.log(qTitle.substring(0,4), maxScore, lineItem);
+        csv = csv.concat(lineItem);
+        }
+        csv = csv.concat(", ");
       }
-      Logger.log("===================")
+      //[debug] Logger.log("===================")
+      csv = csv.concat("\r\n");
     }
+    Logger.log(csv);
   }
