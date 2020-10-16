@@ -15,11 +15,10 @@ Inside this CSV file, it will list out either the answer or the score of the que
 
 If the answer of the question do not count as a score (Max Score = 0), the script will return the answer insead of the score of the question. This can be used for questions like : your name, your email address ... etc.
 
+**Reference:**
 
 This Script is based on **How to Get the Quiz Score in Google Forms with Apps Script** 
 https://www.labnol.org/code/google-quiz-score-200301
-
-Other references:
 
 *current folder name in google script, google drive? How?*
 https://stackoverflow.com/questions/52196752/current-folder-name-in-google-script-google-drive-how
